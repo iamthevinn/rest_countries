@@ -113,6 +113,22 @@ const HomeView = (props) => {
   )
 }
 
+const TrackingView = (props) => {
+  return (
+    <div>
+      <div className="columns small-3 padding-top-medium leftNav">
+        <ul className="tabs vertical">
+          <BlocTab loadCountriesFromBloc={props.loadCountriesFromBloc} changeSelectedBloc={props.changeSelectedBloc} exact={true} to={"/"} tabName="HOME" />
+          <BlocTab loadCountriesFromBloc={props.loadCountriesFromBloc} changeSelectedBloc={props.changeSelectedBloc} exact={true} to={"/tracking/countries"} tabName="TRACKING" />
+        </ul>
+      </div>
+      <div className="columns small-9 padding-top-medium rightHome">
+        You're InTracking
+      </div>
+    </div>
+  )
+}
+
 class App extends Component {
   constructor(props) {
     super(props)
@@ -128,20 +144,22 @@ class App extends Component {
   }
 
   loadCountriesFromBloc(blocName) {
-    const promise = axios.get('http://restcountries.eu/rest/v2/regionalbloc/' + blocName);
+    if (blocName !== "home" && blocName !== 'tracking') {
+      const promise = axios.get('http://restcountries.eu/rest/v2/regionalbloc/' + blocName);
 
-    promise.then(({ data: countries }) => {
-      this.setState({ blocCountries: countries })
-    }, () => { })
+      promise.then(({ data: countries }) => {
+        this.setState({ blocCountries: countries })
+      }, () => { })
+    }
   }
 
   changeSelectedBloc(blocName) {
     if (blocName !== "HOME" && blocName !== "TRACKING")
-      this.setState({selectedBloc: blocName})
+      this.setState({ selectedBloc: blocName })
     else {
-      this.setState({selectedBloc: undefined, blocCountries: []})
+      this.setState({ selectedBloc: undefined, blocCountries: [] })
     }
-      
+
   }
 
   render() {
@@ -151,6 +169,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" render={() => <HomeView loadCountriesFromBloc={this.loadCountriesFromBloc} changeSelectedBloc={this.changeSelectedBloc} />} />
             <Route exact path="/:bloc" render={({ match }) => <BlocView countries={this.state.blocCountries} changeSelectedBloc={this.changeSelectedBloc} match={match} loadCountriesFromBloc={this.loadCountriesFromBloc} />} />
+            <Route exact path="/tracking/countries" render={() => <TrackingView loadCountriesFromBloc={this.loadCountriesFromBloc} changeSelectedBloc={this.changeSelectedBloc} />} />
           </Switch>
         </div>
       </Router>
