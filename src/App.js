@@ -128,13 +128,11 @@ class App extends Component {
   }
 
   loadCountriesFromBloc(blocName) {
-    if (blocName !== "HOME" && blocName !== "TRACKING") {
-      const promise = axios.get('http://restcountries.eu/rest/v2/regionalbloc/' + blocName);
+    const promise = axios.get('http://restcountries.eu/rest/v2/regionalbloc/' + blocName);
 
-      promise.then(({ data: countries }) => {
-        this.setState({ blocCountries: countries })
-      }, () => { })
-    }
+    promise.then(({ data: countries }) => {
+      this.setState({ blocCountries: countries })
+    }, () => { })
   }
 
   changeSelectedBloc(blocName) {
