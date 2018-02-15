@@ -1,0 +1,12 @@
+.App {
+  height: 100vh;
+}
+
+.leftNav {
+  height: 100vh
+}
+
+.rightBloc {
+  height: 100vh;
+  overflow-y: auto;
+}
