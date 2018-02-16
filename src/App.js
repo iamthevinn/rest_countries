@@ -84,7 +84,7 @@ const CountryCard = (props) => {
         </div>
       </div>
       <div style={{ display: 'inline-block', paddingLeft: '30%', verticalAlign: 'top' }}>
-        <button disabled={props.isTracked && props.fromBloc} className={props.isTracked ? props.fromBloc ? "warning" : "alert" : "success"} onClick={!props.isTracked ? () => props.addToTrackingList(props.country) : () => props.removeFromTrackingList(props.country)}>Track</button>
+        <button disabled={props.isTracked && props.fromBloc} className={props.isTracked ? props.fromBloc ? "warning" : "alert" : "success"} onClick={!props.isTracked ? () => props.addToTrackingList(props.country) : () => props.removeFromTrackingList(props.country)}>{props.isTracked ? 'Tracked' : 'Track'}</button>
       </div>
 
     </div>
@@ -137,7 +137,7 @@ class TrackingView extends Component {
         </div>
         <div className="columns small-9 padding-top-medium rightHome">
           <div>
-            {this.props.trackedCountries.map((country) => <CountryCard key={country.id} isTracked={this.props.trackedCountries.find((trackedCountry) => trackedCountry.name === country.name)} addToTrackingList={this.props.addToTrackingList} removeFromTrackingList={this.props.removeFromTrackingList} country={country} />)}
+            {this.props.trackedCountries.map((country) => <CountryCard changeSelectedCountry={this.props.changeSelectedCountry} key={country.id} isTracked={this.props.trackedCountries.find((trackedCountry) => trackedCountry.name === country.name)} addToTrackingList={this.props.addToTrackingList} removeFromTrackingList={this.props.removeFromTrackingList} country={country} />)}
           </div>
         </div>
       </div>
@@ -266,7 +266,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" render={() => <HomeView loadCountriesFromBloc={this.loadCountriesFromBloc} changeSelectedBloc={this.changeSelectedBloc} />} />
             <Route exact path="/:bloc" render={({ match }) => <BlocView changeSelectedCountry={this.changeSelectedCountry} loadTrackedCountries={this.loadTrackedCountries} trackedCountries={this.state.trackedCountries} addToTrackingList={this.addToTrackingList} countries={this.state.blocCountries} changeSelectedBloc={this.changeSelectedBloc} match={match} loadCountriesFromBloc={this.loadCountriesFromBloc} />} />
-            <Route exact path="/tracking/countries" render={() => <TrackingView removeFromTrackingList={this.removeFromTrackingList} trackedCountries={this.state.trackedCountries} loadTrackedCountries={this.loadTrackedCountries} loadCountriesFromBloc={this.loadCountriesFromBloc} changeSelectedBloc={this.changeSelectedBloc} />} />
+            <Route exact path="/tracking/countries" render={() => <TrackingView changeSelectedCountry={this.changeSelectedCountry} removeFromTrackingList={this.removeFromTrackingList} trackedCountries={this.state.trackedCountries} loadTrackedCountries={this.loadTrackedCountries} loadCountriesFromBloc={this.loadCountriesFromBloc} changeSelectedBloc={this.changeSelectedBloc} />} />
             <Route exact path="/countries/:country" render={({ match }) => <CountryView match={match} setSelectedCountry={this.setSelectedCountry} changeSelectedBloc={this.changeSelectedBloc} loadCountriesFromBloc={this.loadCountriesFromBloc} selectedCountry={this.state.selectedCountry} />} />
           </Switch>
         </div>
