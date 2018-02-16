@@ -70,7 +70,6 @@ class BlocView extends Component {
 }
 
 const CountryCard = (props) => {
-  console.log(props)
   return (
     <div className="card">
       <div style={{ display: 'inline-block' }}>
